@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/tool.css">
+    <title>购房小工具</title>
+    <style>
+        .banner {
+            background-color: #ec8121;
+            line-height: 38px;
+            font-size: 12px;
+            height: 38px;
+        }
+
+        .banner a {
+            color: white;
+        }
+
+        .banner ul li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .banner .phone span {
+            margin-left: 10px;
+        }
+
+        .toolHeader {
+            height: 60px;
+            background-color: rgb(209, 201, 201);
+        }
+
+        .toolLogo {
+            float: left;
+        }
+
+        .you {
+            float: right;
+        }
+
+        .toolLogo a {
+            background: url(images/logo.png) no-repeat;
+            background-size: 100%;
+            height: 100px;
+            width: 100px;
+            display: inline-block;
+        }
+
+        .logoRow .you a {
+            color: black;
+        }
+
+        .mainTitle {
+            font-size: 28px;
+            color: #333;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .subTitle {
+            font-size: 15px;
+            color: #878787;
+            margin-top: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .yanse {
+            background-color: rgb(209, 201, 201);
+            height: 140px;
+        }
+
+        .subTitle span {
+            margin-left: 100px;
+        }
+
+        .line1 {
+            background: url(images/xiexian.png) repeat-x;
+            height: 7px;
+            margin-top: 40px;
+        }
+
+        .wenda {
+            color: black;
+            font-size: 14px;
+            font-weight: 700px;
+            padding-bottom: 16px;
+            margin-top: 20px;
+        }
+
+        .wenda1 {
+            border-top: 1px solid #eee;
+            padding-top: 14px;
+        }
+
+        .container .wenda2 a {
+            font-size: 12px;
+            line-height: 2.1;
+            color: #394043;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .footer3 {
+            background-color: #ec8121;
+            line-height: 38px;
+            font-size: 12px;
+            height: 38px;
+            color: white;
+        }
+
+        .footer1 li {
+            display: inline-block;
+            margin-right: 10px;
+            ;
+        }
+
+        .footer2 {
+            background-color: #ec8121;
+            height: 100px;
+        }
+
+        .yanse2 a {
+            color: black;
+            display: inline-block;
+            font-size: 20px;
+        }
+
+        .yanse2 li {
+            display: inline-block;
+            margin-right: 50px;
+            margin-top: 60px;
+            margin-bottom: 30px;
+        }
+
+        .hezi1 {
+            border-bottom: 3px solid #ec8121;
+        }
+
+        .yanse3 tr {
+            color: #333;
+            font-size: large;
+            height: 70px;
+            width: 50px;
+        }
+
+        div .yanse3 tr {
+            border-top: 10px;
+        }
+
+        .kuang {
+            display: inline-block;
+            border: 0;
+            border-radius: 2px;
+            width: 202px;
+            line-height: 54px;
+            text-align: center;
+            font-size: 18px;
+            background-color: #ec8121;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .father {
+            width: 1226px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 600px;
+        }
+
+        .youbian {
+            height: 340px;
+            width: 280px;
+            background-color: orange;
+            border: 2px solid #394043;
+            border-radius: 2px;
+            margin-right: 100px;
+            margin-top: 50px;
+        }
+
+        .youbian1 {
+            width: 280px;
+            height: 54px;
+            font-size: 14px;
+            background-color: #333;
+            font-weight: 700;
+            display: inline-block;
+            text-align: right;
+            color: #fff;
+            line-height: 54px;
+        }
+
+        .juli {
+            margin-left: 20px;
+        }
+
+        .youbian2 {
+            margin-top: 0px;
+            width: 280px;
+            height: 14px;
+        }
+
+        .hezi1 {
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-block;
+            width: 276px;
+            height: 52px;
+        }
+
+        .flag1 {
+            width: 600px;
+            height: 93px;
+        }
+
+        .juli1 {
+            margin-left: 45px;
+        }
+
+        .juli2 {
+            margin-left: 86px;
+        }
+
+        .juli3 {
+            margin-left: 70px;
+        }
+
+        .active {
+            background-color: #ec8121;
+        }
+
+        .inputNum {
+            border-bottom: 1px solid #ec8121;
+        }
+
+        .hezi1 .fl {
+            text-align: center;
+            width: 60px;
+        }
+
+        .hezi1 .fr {
+            width: 78px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="banner">
+        <div class=" container">
+            <div class="banner-left fl">
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="#">二手房</a></li>
+                    <li><a href="#">新房</a></li>
+                    <li><a href="#">租房</a></li>
+                    <li><a href="#">办公</a></li>
+                    <li><a href="#">小区</a></li>
+                    <li><a href="#">问答</a></li>
+                    <li><a href="#">工具</a></li>
+                    <li><a href="#">房源</a></li>
+
+                </ul>
+            </div>
+            <div class="banner-right fr">
+                <div class="login fl" id="userInfoContainer">
+                    <i></i>
+                    <a href="#" id="loginBtn" rel="nofollow">登录</a>
+                    <span>/</span>
+                    <a href="#" id="registerBtn" rel="nofollow">注册</a>
+                </div>
+                <div class="phone fr">
+                    <span>热线电话820-820-8820</span>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="toolHeader">
+        <div class="container">
+            <div class="logoRow">
+                <div class="toolLogo">
+                    <a href="index.html"></a>
+                </div>
+                <div class="you"><a href="#">下载快客租房app</a></div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="yanse">
+        <div class="container ">
+            <div class="toolTitle">
+                <div class="mainTitle">购房工具</div>
+                <div class="subTitle"><span>复杂的房贷税费计算，链家购房工具帮你解决</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="hezi1 flag1">
+            <ol class="yanse2">
+                <li class="active"><a href="#">房贷计算器</a></li>
+                <li><a href="#">新房税收计算器</a></li>
+                <li><a href="#">购房资质测试</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="container father">
+        <div class="fl zuobian">
+            <table class="yanse3 ">
+                <tr>
+                    <td>贷款类型:</td>
+                    <td><select disabled name="" id="">
+                            <option value="">公积金贷款</option>
+                            <option value="">商业贷款</option>
+                            <option value="">组合贷款</option>
+                        </select></td>
+                </tr>
+                <tr>
+                    <td>计算方式:</td>
+                    <td>
+                        <select disabled name="" id="">
+                            <option value="">按贷款总额</option>
+                            <option value="">按房屋总价</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>公积金金额:</td>
+                    <td><input class="inputNum" placeholder="请输入大于0数字" type="多少平万元">万元</td>
+                </tr>
+                <tr>
+                    <td>公积金利率:</td>
+                    <td><select disabled name="" id="">
+                            <option class="point" value="">基准利率3.250%</option>
+                            <option class="point" value="">基准利率上涨10%(3.75%)</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>公积金年限:</td>
+                    <td><select class="year1" name="" id="">
+                            <option value="30">30</option>
+                            <option value="29">29</option>
+                            <option value="28">28</option>
+                            <option value="27">27</option>
+                            <option value="26">26</option>
+                            <option value="25">25</option>
+                            <option value="24">24</option>
+                            <option value="23">23</option>
+                            <option value="22">22</option>
+                            <option value="21">21</option>
+                            <option value="20">20</option>
+                            <option value="19">19</option>
+                            <option value="18">18</option>
+                            <option value="17">17</option>
+                            <option value="16">16</option>
+                            <option value="15">15</option>
+                            <option value="14">14</option>
+                            <option value="13">13</option>
+                            <option value="12">12</option>
+                            <option value="11">11</option>
+                            <option value="10">10</option>
+                            <option value="9">9</option>
+                            <option value="8">8</option>
+                            <option value="7">7</option>
+                            <option value="6">6</option>
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="kuang">开始计算</div>
+        </div>
+        <div class="fr youbian">
+            <div class="youbian1">
+                <div class="fl juli">类型</div>
+                <div class="fl juli">等额本息还款</div>
+                <div class="fl juli">等额本金还款</div>
+            </div>
+            <div class="youbian2">
+                <div class="hezi1">
+                    <div class="fr ">元</div>
+                    <div class="fr ">元</div>
+                    <div class="fl ">月供</div>
+                </div>
+                <div class="hezi1">
+
+                    <div class="fr ">年</div>
+                    <div class="fr ">年</div>
+                    <div class="fl ">贷款年限</div>
+                </div>
+                <div class="hezi1">
+
+                    <div class="fr ">万元</div>
+                    <div class="fr ">万元</div>
+                    <div class="fl ">贷款总额</div>
+                </div>
+                <div class="hezi1">
+
+                    <div class="fr ">万元</div>
+                    <div class="fr ">万元</div>
+                    <div class="fl ">利息总额</div>
+                </div>
+                <div class="hezi1">
+
+                    <div class="fr ">万元</div>
+                    <div class="fr ">万元</div>
+                    <div class="fl ">还款总额</div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="line1 container"></div>
+    <div class="wenda container">相关问答</div>
+    <div class=" container">
+        <ol class=" wenda1 wenda2">
+            <li> <a href="#" class="wenda2">商住过户不满三年和满三年土地增值税有差异吗</a></li>
+            <li><a href="#">房子税务问题</a></li>
+            <li><a href="#">契税</a></li>
+            <li><a href="#">二手房交易需缴纳哪些费用？</a></li>
+            <li><a href="#">拍卖房税率如何计算</a></li>
+            <li><a href="#">父母房产添加子女名字</a></li>
+            <li><a href="#">赠与房产出售</a></li>
+        </ol>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="mod_service">
+                <ul>
+                    <li>
+                        <h5 class="beijing1"></h5>
+                        <div class="service_txt">
+                            <h4>正品保障</h4>
+                            <p>奢侈别墅,提供发票</p>
+                        </div>
+                    </li>
+                    <li>
+                        <h5 class="beijing2"></h5>
+                        <div class="service_txt">
+                            <h4>正品保障</h4>
+                            <p>美丽公寓,提供发票</p>
+                        </div>
+                    </li>
+                    <li>
+                        <h5 class="beijing3"></h5>
+                        <div class="service_txt">
+                            <h4>正品保障</h4>
+                            <p>平凡住宅,提供发票</p>
+                        </div>
+                    </li>
+                    <li>
+                        <h5 class="beijing4"></h5>
+                        <div class="service_txt">
+                            <h4>正品保障</h4>
+                            <p>低调土房,提供发票</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="mod_help">
+                <dl>
+                    <dt>服务指南</dt>
+                    <dd><a href="#">购物流程</a></dd>
+                    <dd><a href="#">会员介绍</a></dd>
+                    <dd><a href="#">生活旅行/团购</a></dd>
+                    <dd><a href="#">常见问题</a></dd>
+                    <dd><a href="#">大家电</a></dd>
+                    <dd><a href="#">联系客服</a></dd>
+                </dl>
+                <dl>
+                    <dt>服务指南</dt>
+                    <dd><a href="#">购物流程</a></dd>
+                    <dd><a href="#">会员介绍</a></dd>
+                    <dd><a href="#">生活旅行/团购</a></dd>
+                    <dd><a href="#">常见问题</a></dd>
+                    <dd><a href="#">大家电</a></dd>
+                    <dd><a href="#">联系客服</a></dd>
+                </dl>
+                <dl>
+                    <dt>服务指南</dt>
+                    <dd><a href="#">购物流程</a></dd>
+                    <dd><a href="#">会员介绍</a></dd>
+                    <dd><a href="#">生活旅行/团购</a></dd>
+                    <dd><a href="#">常见问题</a></dd>
+                    <dd><a href="#">大家电</a></dd>
+                    <dd><a href="#">联系客服</a></dd>
+                </dl>
+                <dl>
+                    <dt>帮助中心</dt>
+
+                    <dd><img src="images/weixin.jpg" alt="">快客租房客户端</dd>
+                </dl>
+            </div>
+            <div class="mod_copyright">
+                <div class="links">
+                    关于我们 | 联系我们 | 联系客服 | 商家入驻 | 营销中心 | 手机品优购 | 友情链接 | 销售联盟 | 品优购社区 | 品优购公益 | English Site | Contact U
+                </div>
+                <div class="copyright">
+                    地址：北京市昌平区建材城西路金燕龙办公楼一层 邮编：100096 电话：400-618-4000 传真：010-82935100 邮箱: zhanghj+itcast.cn <br>
+                    京ICP备08001421号京公网安备110108007702
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 底部模块的制作end -->
+    <div class="footer3">
+        <div class="container">
+            <div class="fl">
+                <ol class="footer1">
+                    <li><a href="#">关于快客租房</a></li>
+                    <li><a href="#">联系我们</a></li>
+                    <li><a href="#">加入我们</a></li>
+                    <li><a href="#">隐私声明</a></li>
+                    <li><a href="#">网站地图</a></li>
+                    <li><a href="#">友情链接</a></li>
+                </ol>
+            </div>
+            <div class="fr">官方客服820-820-8820</div>
+        </div>
+    </div>
+    <script>
+        let num = document.querySelector('.inputNum')
+        let point = document.querySelectorAll('.point')
+        let year1 = document.querySelector('.year1')
+        let kuang = document.querySelector('.kuang')
+        let monthNum = document.querySelectorAll('.hezi1 .fr')
+        let year2 = 30
+        year1.addEventListener('change', function (e) {
+            year2 = e.target.value
+        })
+        kuang.addEventListener('click', function () {
+            let num1 = parseInt(num.value / year2 * 1.0325 * 10000 / 12)
+            monthNum[0].innerHTML = `${num1}元`
+            monthNum[1].innerHTML = `${num1}元`
+            monthNum[2].innerHTML = `${year2}年`
+            monthNum[3].innerHTML = `${year2}年`
+            monthNum[4].innerHTML = `${num.value}万元`
+            monthNum[5].innerHTML = `${num.value}万元`
+            monthNum[6].innerHTML = `${parseInt(num.value / year2 * 0.0325*year2)}万元`
+            monthNum[7].innerHTML = `${parseInt(num.value / year2 * 0.0325*year2)}万元`
+            monthNum[8].innerHTML = `${ parseInt(num.value * 1.0325)}万元`
+            monthNum[9].innerHTML = `${ parseInt(num.value * 1.0325)}万元`
+            console.log(num1);
+        })
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="css/base.css"> -->
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/searchList.css">
+  <link rel="shortcut icon" href="./images/favicon.ico" />
+  <script src="./lib/vue-2.6.12.js"></script>
+  <script src="https://npmcdn.com/axios/dist/axios.min.js"></script>
+  <script src="./lib/jquery-1.12.4.min.js"></script>
+  <title>快客租房</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="header">
+      <div class="container">
+        <div class="logo fl">
+          <a href="index.html"><img src="images/logo.png" title="快客租房" alt=""></a>
+        </div>
+        <div class="location fl">
+          <span>成都</span>
+        </div>
+        <div class="nav fr">
+          <div class="nav-list">
+            <ul>
+              <li><a href="#">租房</a></li>
+              <li><a href="tools.html">工具</a></li>
+              <li><a href="housingResource.html">发布房源</a></li>
+              <li><a href="#">了解我们</a></li>
+              <li><a href="#">下载app</a></li>
+              <li><a href="login.html" class="user">登录</a></li>
+              <li><a href="register.html">注册</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="search">
+        <input id="ipt" class="search-input" type="search" placeholder="请输入区域,商圈或小区名开始找房" v-model="word">
+
+        <button class="searchGo" @click="go">开始找房</button>
+      </div>
+      <div class="list">
+        <ul v-for="(item, index) in list" :key="index" style="height: 220px;border: 2px solid #ec811f;">
+          <li class="fl"><img :src="item.picture" alt=""></li>
+          <div class="fl" style="height: 50px; width: 500px;">
+            <li>{{item.place}}</li>
+            <li>{{item.bedroom}}室{{item.drawingRoom}}厅</li>
+            <li v-if="item.type">出租</li>
+            <li v-else>出售</li>
+            <li v-if="item.type" style="color: red;">{{item.price}}元/月</li>
+            <li v-else style="color: red;">{{item.price}}万元</li>
+          </div>
+
+          <div class="fl" style="height: 50px;">
+            <li style="height: 50px;">发布者:{{item.publisherId}}</li>
+            <li style="height: 50px;">联系方式:{{item.phone}}</li>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script>
+    let storage = window.localStorage;
+    const vm = new Vue({
+      el: '#app',
+      data() {
+        return {
+          list: [],
+          word: ''
+        }
+      },
+      created() {
+        if (storage["search_word"] != '') {
+          console.log(1111);
+          let search_word = localStorage.getItem("search_word")
+          axios.post('http://127.0.0.1:3007/api/houselist', {
+            search_word
+          }, {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(({
+            data
+          }) => {
+            console.log(data.list)
+            this.list = data.list
+          })
+        }
+      },
+      methods: {
+        go() {
+          storage["search_word"] = ''
+
+          axios.post('http://127.0.0.1:3007/api/houselist',
+              this.word, {
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                }
+              }
+
+            )
+            .then(({
+              data
+            }) => {
+              console.log(data);
+              this.list = data.list
+            })
+
+          // axios.get('http://127.0.0.1:3007/api/houselist'), {
+          //   params: {
+          //     search_word: this.word
+          //   }
+          // }.then(({
+          //   data
+          // }) => {
+          //   console.log(data.list)
+          //   console.log(search_word)
+          //   this.list = data.list
+          // })
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>

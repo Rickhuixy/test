@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+    content="width=device-width,maximum-scale=1.0,minimum-scale=1.0,initial-scale=1.0,user-scalable=0">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="shortcut icon" href="./images/favicon.ico" />
+  <title>快客租房</title>
+  <script src="./lib/jquery.js"></script>
+  <script src="./lib/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=GDwCI9DXCGmRjrt2D3AG1Y4yTsz8KNwQ"></script>
+</head>
+
+<body>
+  <div class="phone-note">
+    <h1>移动web暂未开发,请先使用PC端访问</h1>
+  </div>
+  <div id="app">
+    <div class="header">
+      <div class="container">
+        <div class="logo fl">
+          <a href="index.html"><img src="images/logo.png" title="快客租房" alt=""></a>
+        </div>
+        <div class="location fl">
+          <span>成都</span>
+        </div>
+        <div class="nav fr">
+          <div class="nav-list">
+            <ul>
+              <li><a href="#">租房</a></li>
+              <li><a href="tools.html">工具</a></li>
+              <li><a href="housingResource.html">发布房源</a></li>
+              <li><a href="#">了解我们</a></li>
+              <li><a href="#">下载app</a></li>
+              <li><a href="login.html" class="user">登录</a></li>
+              <li><a href="register.html">注册</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="header-wrap">
+          <div class="wrap-slogan">
+            <h1>让租房更快捷</h1>
+          </div>
+          <div class="house-num">
+            <h2>成都快客租房真实租房155套</h2>
+          </div>
+          <div class="search">
+            <input id="ipt" class="search-input" type="search" placeholder="请输入区域,商圈或小区名开始找房">
+            <div class="map">
+              <a href="map.html"> <span>地图</span></a>
+            </div>
+            <button class="searchGo">开始找房</button>
+            <div class="search-list">
+              <ul>
+                <li class="list1" @click="goSearch"></li>
+                <li class="list2"></li>
+                <li class="list3"></li>
+                <li class="list4"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer">
+      <div class="container">
+        <div class="footer-service">
+          <ul class="list-service">
+            <li><a href="#">预约看房服务</a></li>
+            <li><a href="#">最快6小时签合同</a></li>
+            <li><a href="#">一对一看房服务</a></li>
+            <li><a href="#">房源透明真实</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <dl class="col-links col-links-first">
+            <dt>帮助中心</dt>
+            <dd><a href="#">账户管理</a> </dd>
+            <dd><a href="#">租房指南</a></dd>
+            <dd><a href="#">房源操作</a></dd>
+          </dl>
+          <dl class="col-links">
+            <dt>服务支持</dt>
+            <dd><a href="#">中介政策</a> </dd>
+            <dd><a href="#">自助服务</a></dd>
+            <dd><a href="#">相关资料</a></dd>
+          </dl>
+          <dl class="col-links">
+            <dt>线上访问</dt>
+            <dd><a href="#">移动端访问</a> </dd>
+            <dd><a href="#">App访问</a></dd>
+          </dl>
+          <dl class="col-links">
+            <dt>关于快客</dt>
+            <dd><a href="#">了解快客</a> </dd>
+            <dd><a href="#">新浪微博</a></dd>
+            <dd><a href="#">联系快客</a></dd>
+          </dl>
+          <dl class="col-links">
+            <dt>特色服务</dt>
+            <dd><a href="#">W码通道</a> </dd>
+            <dd><a href="#">近期活动</a></dd>
+            <dd><a href="#">真伪查询</a></dd>
+          </dl>
+        </div>
+        <div class="slogan" style="color: coral; padding-left: 574px;">让租房更快捷</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let storage = window.localStorage;
+    if (localStorage.getItem("r.point.lng") == undefined) {
+      var geolocation = new BMap.Geolocation();
+      geolocation.getCurrentPosition(function (r) {
+        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+
+          storage["r.point.lng"] = r.point.lng;
+          storage["r.point.lat"] = r.point.lat;
+        }
+      });
+    }
+  </script>
+  <script>
+    let search = document.querySelector('.search-input[type=search]')
+    let searchList = document.querySelector('.search-list')
+    $(function () {
+      // 1.定义延时器的Id
+      var timer = null
+      // 定义全局缓存对象
+      var cacheObj = {}
+      // 2.定义防抖的函数
+      function debounceSearch(kw) {
+        timer = setTimeout(function () {
+          getSuggestList(kw)
+        }, 500)
+      }
+      // 搜索按钮点击事件
+      $('.searchGo').on('click', function () {
+        storage["search_word"] = $('#ipt').val().trim();
+
+        location.href = './searchList.html'
+      })
+
+      // 为输入框绑定keyup事件
+      $('#ipt').on('keyup', function () {
+        clearTimeout(timer)
+        var keywords = $(this).val().trim()
+        if (keywords.length <= 0) {
+          // $('.search-list').empty().hide()
+          console.log(1);
+          $('.list1').empty().hide()
+          $('.list2').empty().hide()
+          $('.list3').empty().hide()
+          $('.list4').empty().hide()
+          return
+        }
+        // 先判断缓存中是否有数据
+        if (cacheObj[keywords]) {
+          return renderSuggestList(cacheObj[keywords])
+        }
+        // TODO:获取搜索建议列表
+        // console.log(keywords);
+        // getSuggestList(keywords)
+        debounceSearch(keywords)
+      })
+
+      function getSuggestList(kw) {
+        $.ajax({
+          // url: 'https://suggest.taobao.com/sug?q=' + kw,
+          url: 'https://cd.lianjia.com/api/headerSearch?cityId=510100&cityName=%E6%88%90%E9%83%BD&channel=site&q=&keyword=' +
+            kw,
+          dataType: 'jsonp',
+          success: function (res) {
+            // console.log(res.data.data);
+            // console.log(res.data.data.result.length);
+            renderSuggestList(res)
+            // 1.获取到用户输入的内容,当作键
+            var k = $('#ipt').val().trim()
+            // 2.需要将数据作为值,进行缓存
+            cacheObj[k] = res
+          }
+        })
+        // console.log(keywords);
+
+      }
+      // 渲染UI结构
+      function renderSuggestList(res) {
+        if (res.data.data.result.length <= 0) {
+          console.log(0);
+          $('.list1').empty().hide()
+          $('.list2').empty().hide()
+          $('.list3').empty().hide()
+          $('.list4').empty().hide()
+          return
+        }
+        $('.search-list').show()
+        console.log(res);
+        // var htmlStr = template("tpl-suggestList", res)
+        var htmlStr1 = res.data.data.result[0].title + res.data.data.result[0].region
+        $('.list1').html(htmlStr1).show()
+        if (res.data.data.result.length >= 1) {
+          var htmlStr2 = res.data.data.result[1].title + res.data.data.result[1].region
+          $('.list2').html(htmlStr2).show()
+        }
+        if (res.data.data.result.length >= 2) {
+          var htmlStr3 = res.data.data.result[2].title + res.data.data.result[2].region
+          $('.list3').html(htmlStr3).show()
+        }
+        if (res.data.data.result.length >= 3) {
+          var htmlStr4 = res.data.data.result[3].title + res.data.data.result[3].region
+          $('.list4').html(htmlStr4).show()
+        }
+
+
+      }
+    })
+  </script>
+
+  <script>
+    function getMsg(text) {
+      $.ajax({
+        method: 'get',
+        url: 'http://ajax.frontend.itheima.net:3006/api/robot',
+        data: {
+          spoken: text
+        },
+        success: function (res) {
+          // console.log(res);
+          if (res.message === 'success') {
+            var msg = res.data.info.text
+            $('#talk_list').append('<li class="left_word"><img src = "img/person01.png" /> <span>' + msg +
+              '</span></li >')
+
+          }
+        }
+      })
+    }
+  </script>
+  <script type="text/javascript" src="js/index.js"></script>
+
+  <script src="./lib/vue-2.6.12.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data() {
+        return {
+          name: 0
+        }
+      },
+      methods: {
+        goSearch() {
+          storage["search_word"] = $('#ipt').val().trim();
+
+          location.href = './searchList.html'
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>

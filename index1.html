@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+    content="width=device-width,maximum-scale=1.0,minimum-scale=1.0,initial-scale=1.0,user-scalable=0">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <title>快客租房</title>
+  <script src="./lib/jquery.js"></script>
+  <script src="./lib/jquery-1.12.4.min.js"></script>
+</head>
+
+<body>
+  <div class="phone-note">
+    <h1>移动web暂未开发,请先使用PC端访问</h1>
+  </div>
+  <div class="app">
+    <div class="header">
+      <div class="container">
+        <div class="logo fl">
+          <a href="index.html"><img src="images/logo.png" title="快客租房" alt=""></a>
+        </div>
+        <div class="location fl">
+          <span>成都</span>
+        </div>
+        <div class="nav fr">
+          <div class="nav-list">
+            <ul>
+              <li><a href="#">租房</a></li>
+              <li><a href="tools.html">工具</a></li>
+              <li><a href="housingResource.html">发布房源</a></li>
+              <li><a href="#">了解我们</a></li>
+              <li><a href="#">下载app</a></li>
+              <li><a href="login.html" class="user">登录</a></li>
+              <li><a href="register.html">注册</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="header-wrap">
+          <div class="wrap-slogan">
+            <h1>让租房更快捷</h1>
+          </div>
+          <div class="house-num">
+            <h2>成都快客租房真实租房155套</h2>
+          </div>
+          <div class="search">
+            <input id="ipt" class="search-input" type="search" placeholder="请输入区域,商圈或小区名开始找房">
+            <div class="map">
+              <span>地图</span>
+            </div>
+            <button>开始找房</button>
+            <div class="search-list">
+              <ul>
+                <li class="list1"></li>
+                <li class="list2"></li>
+                <li class="list3"></li>
+                <li class="list4"></li>
+              </ul>
+            </div>
+          </div>
+          <script>
+            let search = document.querySelector('.search-input[type=search]')
+            let searchList = document.querySelector('.search-list')
+            // search.addEventListener('focus', function () {
+            //   search.style.border = '5px solid #ec811f'
+            //   searchList.style.display = 'block'
+            // })
+            // search.addEventListener('blur', function () {
+            //   search.style.border = '2px solid #ec811f'
+            //   searchList.style.display = 'none'
+            // })
+          </script>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+      // 1.定义延时器的Id
+      var timer = null
+      // 定义全局缓存对象
+      var cacheObj = {}
+      // 2.定义防抖的函数
+      function debounceSearch(kw) {
+        timer = setTimeout(function () {
+          getSuggestList(kw)
+        }, 500)
+      }
+      // 为输入框绑定keyup事件
+      $('#ipt').on('keyup', function () {
+        clearTimeout(timer)
+        var keywords = $(this).val().trim()
+        if (keywords.length <= 0) {
+          // $('.search-list').empty().hide()
+          console.log(1);
+          $('.list1').empty().hide()
+          $('.list2').empty().hide()
+          $('.list3').empty().hide()
+          $('.list4').empty().hide()
+          return
+        }
+        // 先判断缓存中是否有数据
+        if (cacheObj[keywords]) {
+          return renderSuggestList(cacheObj[keywords])
+        }
+        // TODO:获取搜索建议列表
+        // console.log(keywords);
+        // getSuggestList(keywords)
+        debounceSearch(keywords)
+      })
+
+      function getSuggestList(kw) {
+        $.ajax({
+          // url: 'https://suggest.taobao.com/sug?q=' + kw,
+          url: 'https://cd.lianjia.com/api/headerSearch?cityId=510100&cityName=%E6%88%90%E9%83%BD&channel=site&q=&keyword=' +
+            kw,
+          dataType: 'jsonp',
+          success: function (res) {
+            // console.log(res.data.data);
+            // console.log(res.data.data.result.length);
+            renderSuggestList(res)
+            // 1.获取到用户输入的内容,当作键
+            var k = $('#ipt').val().trim()
+            // 2.需要将数据作为值,进行缓存
+            cacheObj[k] = res
+          }
+        })
+        // console.log(keywords);
+
+      }
+      // 渲染UI结构
+      function renderSuggestList(res) {
+        if (res.data.data.result.length <= 0) {
+          console.log(0);
+          $('.list1').empty().hide()
+          $('.list2').empty().hide()
+          $('.list3').empty().hide()
+          $('.list4').empty().hide()
+          return
+        }
+        $('.search-list').show()
+        console.log(res);
+        // var htmlStr = template("tpl-suggestList", res)
+        var htmlStr1 = res.data.data.result[0].title + res.data.data.result[0].region
+        $('.list1').html(htmlStr1).show()
+        if (res.data.data.result.length >= 1) {
+          var htmlStr2 = res.data.data.result[1].title + res.data.data.result[1].region
+          $('.list2').html(htmlStr2).show()
+        }
+        if (res.data.data.result.length >= 2) {
+          var htmlStr3 = res.data.data.result[2].title + res.data.data.result[2].region
+          $('.list3').html(htmlStr3).show()
+        }
+        if (res.data.data.result.length >= 3) {
+          var htmlStr4 = res.data.data.result[3].title + res.data.data.result[3].region
+          $('.list4').html(htmlStr4).show()
+        }
+
+
+      }
+    })
+  </script>
+
+  <script>
+    function getMsg(text) {
+      $.ajax({
+        method: 'get',
+        url: 'http://ajax.frontend.itheima.net:3006/api/robot',
+        data: {
+          spoken: text
+        },
+        success: function (res) {
+          // console.log(res);
+          if (res.message === 'success') {
+            var msg = res.data.info.text
+            $('#talk_list').append('<li class="left_word"><img src = "img/person01.png" /> <span>' + msg +
+              '</span></li >')
+
+          }
+        }
+      })
+    }
+  </script>
+  <script type="text/javascript" src="js/index.js"></script>
+</body>
+
+</html>

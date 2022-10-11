@@ -1,0 +1,38 @@
+/* 申明字体图标 */
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.ttf') format('truetype');
+}
+
+@media screen and (max-width: 1000px) {
+    body .phone-note {
+        display: block;
+        margin: auto;
+    }
+}
+
+.phone-note {
+    display: none;
+    height: 40000px;
+}
+
+.phone-note h1 {
+    text-align: center;
+    font-size: 30px;
+    width: 100%;
+    color: black;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.container {
+    width: 1226px;
+    margin-left: auto;
+    margin-right: auto;
+}
